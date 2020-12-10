@@ -5,6 +5,25 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p th:text="'Hello, ' + ${str} + '!'" />
+<div>
+    <form method="post">
+        <input type="text" name="text" placeholder="Введите сообщение:"/>
+        <input type="text" name="tag" placeholder="Введите тег:"/>
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+
+<p>Список сообщений:</p>
+
+<form method="post" action="filter">
+    <input type="text" name="tag">
+    <button type="submit">Найти</button>
+</form>
+
+<div th:each="message : ${message}">
+<b th:text="${message.id}"></b>
+<span th:text="${message.text}"></span>
+<i th:text="${message.tag}"></i>
+</div>
 </body>
 </html>
