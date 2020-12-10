@@ -1,12 +1,18 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Main page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <div>
-    <form method="post">
+    <form method="post" th:action="@{/logout}">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<div>
+    <form method="post" th:action="@{/main}">
         <input type="text" name="text" placeholder="Введите сообщение:"/>
         <input type="text" name="tag" placeholder="Введите тег:"/>
         <button type="submit">Добавить</button>
@@ -15,7 +21,7 @@
 
 <p>Список сообщений:</p>
 
-<form method="post" action="filter">
+<form method="post" th:action="@{/filter}">
     <input type="text" name="tag">
     <button type="submit">Найти</button>
 </form>

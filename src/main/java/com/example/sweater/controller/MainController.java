@@ -1,4 +1,4 @@
-package com.example.sweater;
+package com.example.sweater.controller;
 
 import com.example.sweater.domain.Message;
 import com.example.sweater.repos.MessageRepo;
@@ -12,25 +12,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class GreetingController {
+public class MainController {
 
     @Autowired
     private MessageRepo messageRepo;
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
+    @GetMapping("/")
+    public String greeting() {
         return "greeting";
     }
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Model model) {
         Iterable<Message> messages = messageRepo.findAll();
         model.addAttribute("message", messages);
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("/main")
     public String sendMessage(@RequestParam String text, @RequestParam String tag, Model model) {
         Message message = new Message(text, tag);
         messageRepo.save(message);
@@ -39,7 +38,7 @@ public class GreetingController {
         return "main";
     }
 
-    @PostMapping("filter")
+    @PostMapping("/filter")
     public String filter(@RequestParam String tag, Model model) {
         Iterable<Message> messages;
 
