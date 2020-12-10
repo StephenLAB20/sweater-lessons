@@ -21,8 +21,8 @@
 
 <p>Список сообщений:</p>
 
-<form method="post" th:action="@{/filter}">
-    <input type="text" name="tag">
+<form method="get" th:action="@{/main}">
+    <input type="text" name="tag" th:value="${tag}"/>
     <button type="submit">Найти</button>
 </form>
 
