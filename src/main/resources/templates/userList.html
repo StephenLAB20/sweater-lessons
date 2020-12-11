@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p>List of users</p>
+
+<table>
+    <tr>
+        <th>NAME</th>
+        <th>ROLE</th>
+        <th>ACTION</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.username}"></td>
+            <td th:text="${#strings.listJoin(user.roles, ',')}"></td>
+        <td> <a th:href="@{/user/{id}/edit (id = ${user.id})}">EDIT</a> </td>
+    </tr>
+</table>
+
+
+<a href="/main">Main page</a>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p>User edit</p>
+<form method="post" th:action="@{/user/{id}/edit (id = ${user.id})}">
+    <input type="text" name="username" th:value="${user.username}"/>
+
+    <ul>
+        <li th:each="role : ${roles}">
+            <input type="checkbox" th:id="${role}" th:name="${role}" th:value="${role}" th:checked="${#arrays.contains(user.roles, role)}" />
+            <label th:for="${role}" th:text="${role}"></label>
+        </li>
+    </ul>
+    <input type="text" name="userId" th:value="${user.id}"/>
+    <button type="submit">Save</button>
+</form>
+
+
+
+<a href="/main">Main page</a>
+</body>
+</html>
