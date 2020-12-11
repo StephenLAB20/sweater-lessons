@@ -4,6 +4,7 @@
 <head>
     <title>Main page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 <div>
@@ -13,9 +14,10 @@
 </div>
 <a th:href="@{/user}">List of users</a>
 <div>
-    <form method="post" th:action="@{/main}">
+    <form method="post" th:action="@{/main}" enctype="multipart/form-data">
         <input type="text" name="text" placeholder="Введите сообщение:"/>
         <input type="text" name="tag" placeholder="Введите тег:"/>
+        <input type="file" name="file"/>
         <button type="submit">Добавить</button>
     </form>
 </div>
@@ -32,6 +34,9 @@
     <span th:text="${message.text}"></span>
     <i th:text="${message.tag}"></i>
     <strong th:text="${message.authorName}"></strong>
+    <div th:if="${message.filename}">
+        <img th:src="@{/img/{filename}(filename = ${message.filename})}">
+    </div>
 </div>
 </body>
 </html>
