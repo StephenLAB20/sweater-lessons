@@ -1,42 +1,65 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
+
+<html th:fragment="myHtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="common :: myHead">
     <title>Main page</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-<div>
-    <form method="post" th:action="@{/logout}">
-        <input type="submit" value="Sign Out"/>
+<nav th:insert="common :: myNav"></nav>
+
+<div class="container mt-5">
+
+    <form method="get" th:action="@{/main}" class="form-inline mb-5">
+            <input class="form-control col-lg-4" type="text" name="tag" th:value="${tag}"
+                   placeholder="Поиск по тэгу"/>
+            <button class="btn btn-primary ml-3" type="submit">Найти</button>
     </form>
-</div>
-<a th:href="@{/user}">List of users</a>
-<div>
-    <form method="post" th:action="@{/main}" enctype="multipart/form-data">
-        <input type="text" name="text" placeholder="Введите сообщение:"/>
-        <input type="text" name="tag" placeholder="Введите тег:"/>
-        <input type="file" name="file"/>
-        <button type="submit">Добавить</button>
-    </form>
-</div>
 
-<p>Список сообщений:</p>
-
-<form method="get" th:action="@{/main}">
-    <input type="text" name="tag" th:value="${tag}"/>
-    <button type="submit">Найти</button>
-</form>
-
-<div th:each="message : ${message}">
-    <b th:text="${message.id}"></b>
-    <span th:text="${message.text}"></span>
-    <i th:text="${message.tag}"></i>
-    <strong th:text="${message.authorName}"></strong>
-    <div th:if="${message.filename}">
-        <img th:src="@{/img/{filename}(filename = ${message.filename})}">
+    <a class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Add new message
+    </a>
+    <div class="collapse" id="collapseExample">
+        <div class="form-group mt-3">
+            <form method="post" th:action="@{/main}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="text" placeholder="Введите сообщение:"/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="tag" placeholder="Введите тег:"/>
+                </div>
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile04">
+                        <label class="custom-file-label" for="inputGroupFile04">Добавить файл</label>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+
+    <p>Список сообщений:</p>
+
+    <div class="card-columns">
+        <div class="card" th:each="message : ${message}">
+            <div class="card-img-top" th:if="${message.filename}">
+                <img th:src="@{/img/{filename}(filename = ${message.filename})}">
+            </div>
+
+            <div class="card-body">
+                <b class="card-title" th:text="${message.tag}"></b>
+                <p class="card-text" th:text="${message.text}"></p>
+            </div>
+            <div class="card-footer">
+                <strong th:text="${message.authorName}"></strong>
+            </div>
+        </div>
+    </div>
+
+
+    <footer th:insert="common :: myFooter"></footer>
+
 </div>
+
 </body>
 </html>

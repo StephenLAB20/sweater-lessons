@@ -1,27 +1,29 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<html th:fragment="myHtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="common :: myHead">
+    <title>User list page</title>
 </head>
 <body>
-<p>List of users</p>
+<nav th:insert="common :: myNav"></nav>
+<div class="container mt-5">
+    <p>List of users</p>
 
-<table>
-    <tr>
-        <th>NAME</th>
-        <th>ROLE</th>
-        <th>ACTION</th>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.username}"></td>
+    <table>
+        <tr>
+            <th>NAME</th>
+            <th>ROLE</th>
+            <th>ACTION</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
             <td th:text="${#strings.listJoin(user.roles, ',')}"></td>
-        <td> <a th:href="@{/user/{id}/edit (id = ${user.id})}">EDIT</a> </td>
-    </tr>
-</table>
+            <td><a th:href="@{/user/{id}/edit (id = ${user.id})}">EDIT</a></td>
+        </tr>
+    </table>
 
-
-<a href="/main">Main page</a>
+    <a href="/main">Main page</a>
+    <footer th:insert="common :: myFooter"></footer>
+</div>
 </body>
 </html>

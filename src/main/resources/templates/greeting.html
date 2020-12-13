@@ -1,11 +1,16 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<html th:fragment="myHtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="common :: myHead">
+    <title>Greeting page</title>
 </head>
 <body>
-<p>Hello user</p>
-<a href="/main">Main page</a>
+<nav th:insert="common :: myNav"></nav>
+<div class="container mt-5">
+    <p>Hello, guest</p>
+    <p>This is a simple clone of some application.</p>
+    <footer th:insert="common :: myFooter"></footer>
+
+</div>
 </body>
 </html>
