@@ -13,6 +13,9 @@
     <div th:if="${param.logout}">
         You have been logged out.
     </div>
+    <div th:if="${message}" th:text="${message}">
+
+    </div>
     <form method="post" th:action="@{/login}">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">
