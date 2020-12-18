@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html th:fragment="myHtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="common :: myHead">
+    <title>Profile page</title>
+</head>
+<body>
+<nav th:insert="common :: myNav"></nav>
+<div class="container mt-5">
+<!--    <div th:if="${param.error}">-->
+<!--        Invalid username and password.-->
+<!--    </div>-->
+<!--    <div th:if="${param.logout}">-->
+<!--        You have been logged out.-->
+<!--    </div>-->
+<!--    <div th:if="${message}" th:text="${message}">-->
+<!--    </div>-->
+
+    <form method="post" th:action="@{/user/profile}">
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">
+                Email:
+            </label>
+            <input type="email" class="form-control col-sm-10" name="email" placeholder="Enter email"/>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">
+                Password:
+            </label>
+            <input type="password" class="form-control col-sm-10" name="password" placeholder="Enter password"/>
+        </div>
+        <button type="submit" class="btn btn-primary my-3">Save</button>
+    </form>
+
+    <footer th:insert="common :: myFooter"></footer>
+
+</div>
+</body>
+</html>
