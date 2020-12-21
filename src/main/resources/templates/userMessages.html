@@ -3,30 +3,25 @@
 <html th:fragment="myHtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="common :: myHead">
-    <title>Main page</title>
+    <title>User messages</title>
 </head>
 <body>
 <nav th:insert="common :: myNav"></nav>
 
 <div class="container mt-5">
 
-    <form method="get" th:action="@{/main}" class="form-inline mb-5">
-            <input class="form-control col-lg-4" type="text" name="tag" th:value="${tag}"
-                   placeholder="Поиск по тэгу"/>
-            <button class="btn btn-primary ml-3" type="submit">Найти</button>
-    </form>
-
-    <a class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-        Add new message
+    <a  th:if="${message}"
+        class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Message editor
     </a>
-    <div class="collapse" id="collapseExample">
+    <div class="collapse show" id="collapseExample" th:if="${message}">
         <div class="form-group mt-3">
-            <form method="post" th:action="@{/main}" enctype="multipart/form-data">
+            <form method="post" th:action="@{/user-messages/{userId} (userId = ${#authentication.principal.id})}" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="text" placeholder="Введите сообщение:"/>
+                    <input class="form-control" type="text" th:name="text" placeholder="Введите сообщение:" th:if="${message}" th:value="${message.text}"/>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="tag" placeholder="Введите тег:"/>
+                    <input class="form-control" type="text" th:name="tag" placeholder="Введите тег:" th:if="${message}" th:value="${message.tag}"/>
                 </div>
                 <div class="form-group">
                     <div class="custom-file">
@@ -34,7 +29,8 @@
                         <label class="custom-file-label" for="inputGroupFile04">Добавить файл</label>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Отправить</button>
+                <input type="text" th:name="id" th:if="${message}" th:value="${message.id}"/>
+                <button class="btn btn-primary" type="submit">Сохранить</button>
             </form>
         </div>
     </div>
@@ -52,7 +48,7 @@
                 <p class="card-text" th:text="${message.text}"></p>
             </div>
             <div class="card-footer">
-                <a th:href="@{/user-messages/{authorId} (authorId = ${message.author.id})}"><strong th:text="${message.authorName}"></strong></a>
+                <strong th:text="${message.authorName}"></strong>
                 <a class="btn btn-primary"
                    th:if="${message.author.id == #authentication.principal.id}"
                    th:href="@{/user-messages/{authorId}?message={messageId} (authorId = ${message.author.id}, messageId = ${message.id})}">Edit</a>
