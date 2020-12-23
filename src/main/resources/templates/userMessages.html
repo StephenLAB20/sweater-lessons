@@ -29,12 +29,41 @@
                         <label class="custom-file-label" for="inputGroupFile04">Добавить файл</label>
                     </div>
                 </div>
-                <input type="text" th:name="id" th:if="${message}" th:value="${message.id}"/>
+                <input type="hidden" th:name="id" th:if="${message}" th:value="${message.id}"/>
                 <button class="btn btn-primary" type="submit">Сохранить</button>
             </form>
         </div>
     </div>
 
+    <h3 th:text="${userChannel.username}"></h3>
+    <a class="btn btn-info" th:if="${!isCurrentUser} and ${!isSubscriber}"
+       th:href="@{/user/subscribe/{id} (id = ${userChannel.id})}">Subscribe</a>
+    <a class="btn btn-info" th:if="${!isCurrentUser} and ${isSubscriber}"
+       th:href="@{/user/unsubscribe/{id} (id = ${userChannel.id})}">Unsubscribe</a>
+    <div class="container my-3">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">Subscriptions</div>
+                        <h3 class="card-text">
+                            <a th:href="@{/user/subscriptions/{id}/list (id = ${userChannel.id})}" th:text="${subscriptionsCount}">SubscriptionsCount</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">Subscribers</div>
+                        <h3 class="card-text">
+                            <a th:href="@{/user/subscribers/{id}/list (id = ${userChannel.id})}" th:text="${subscribersCount}">SubscribersCount</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <p>Список сообщений:</p>
 
     <div class="card-columns">

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+
+<html th:fragment="myHtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="common :: myHead">
+    <title>User subscriptions</title>
+</head>
+<body>
+<nav th:insert="common :: myNav"></nav>
+
+<div class="container mt-5">
+
+
+    <h3 th:text="${userChannel.username}"></h3>
+
+    <div th:text="${type}"></div>
+    <ul class="list-group" th:each="user : ${users}">
+        <li class="list-group-item">
+            <a th:href="@{/user-messages/{id} (id = ${user.id})}" th:text="${user.username}"></a>
+        </li>
+    </ul>
+
+
+    <footer th:insert="common :: myFooter"></footer>
+
+</div>
+
+</body>
+</html>
